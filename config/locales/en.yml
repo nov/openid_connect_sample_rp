@@ -1,0 +1,16 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+en:
+  site:
+    title: Connect Me!
+    description: Don't stop connecting!
+  top:
+    title: What's this?
+    description: Sample RP for openid-connect.heroku.com
+  accounts:
+    title: Hello, %{name}
+  user_info:
+    title: UserInfo
+  id_token:
+    title: ID Token

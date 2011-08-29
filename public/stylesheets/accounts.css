@@ -1,0 +1,11 @@
+.accounts pre {
+  overflow-x: scroll;
+  padding: 15px;
+  background: #fff;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 5px;
+}
+.accounts pre.jwt {
+  word-wrap: break-word;
+}
