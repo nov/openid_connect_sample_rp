@@ -15,7 +15,7 @@ test:
 
 production:
   <<: *defaults
-  identifier: 10e151158cb45988d98758c489bc0424
-  secret: 63805108fa6ba35cb27f55cff1cfa4603f0ab80e744e7be0e91eb8dcd69c2150
+  identifier: d36b87830791a037fabf32625bf90865
+  secret: 2c1fb5d90b1066275290871e74aeed656afc1aeccc8fec4196aa726381bffff1
   host: connect-op.heroku.com
   scheme: https
