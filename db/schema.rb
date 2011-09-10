@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110829042007) do
+ActiveRecord::Schema.define(:version => 20110909022417) do
 
   create_table "accounts", :force => true do |t|
     t.datetime "created_at"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(:version => 20110829042007) do
 
   create_table "open_ids", :force => true do |t|
     t.integer  "account_id"
+    t.integer  "provider_id"
     t.string   "identifier"
     t.string   "access_token"
     t.string   "id_token",     :limit => 1024
@@ -28,5 +29,22 @@ ActiveRecord::Schema.define(:version => 20110829042007) do
   end
 
   add_index "open_ids", ["identifier"], :name => "index_open_ids_on_identifier", :unique => true
+
+  create_table "providers", :force => true do |t|
+    t.integer  "account_id"
+    t.string   "name"
+    t.string   "identifier"
+    t.string   "secret"
+    t.string   "scope"
+    t.string   "host"
+    t.string   "scheme"
+    t.string   "authorization_endpoint"
+    t.string   "token_endpoint"
+    t.string   "check_session_endpoint"
+    t.string   "user_info_endpoint"
+    t.string   "public_key_endpoint"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end

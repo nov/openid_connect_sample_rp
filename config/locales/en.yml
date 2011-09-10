@@ -14,3 +14,5 @@ en:
     title: UserInfo
   id_token:
     title: ID Token
+  provider:
+    login: Login with %{provider}

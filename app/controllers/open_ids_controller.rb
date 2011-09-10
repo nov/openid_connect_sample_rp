@@ -2,11 +2,18 @@ class OpenIdsController < ApplicationController
   before_filter :require_anonymous_access
 
   def show
-    authenticate OpenId.authenticate(params[:code])
+    provider = Provider.find params[:provider_id]
+    authenticate provider.authenticate(
+      provider_open_id_url(provider),
+      params[:code]
+    )
     redirect_to account_url
   end
 
   def create
-    redirect_to OpenId.authorization_uri
+    provider = Provider.find params[:provider_id]
+    redirect_to provider.authorization_uri(
+      provider_open_id_url provider
+    )
   end
 end

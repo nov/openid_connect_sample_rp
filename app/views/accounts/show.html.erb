@@ -9,6 +9,9 @@
   <article>
     <h3><%= 'id_token.title'.t %></h3>
     <pre class="jwt"><%= @open_id.id_token %></pre>
-    <pre><%= JSON.pretty_generate @open_id.parsed_id_token %></pre>
+    <pre><%= JSON.pretty_generate @open_id.check_session!.as_json %></pre>
   </article>
+  <aside>
+    <%= link_to 'providers.title'.t, new_provider_path %>
+  </aside>
 </section>

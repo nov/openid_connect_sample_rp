@@ -2,8 +2,14 @@
   <h2><%= 'top.title'.t %></h2>
   <p><%= 'top.description'.t %></p>
   <nav class="connect">
-    <%= form_tag open_id_path do %>
-      <%= submit_tag 'Login' %>
-    <% end %>
+    <ul>
+      <% Provider.all.each do |provider| %>
+        <li>
+          <%= form_tag provider_open_id_path(provider) do %>
+            <%= submit_tag 'provider.login'.t(provider: provider.name) %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
   </nav>
 </article>
