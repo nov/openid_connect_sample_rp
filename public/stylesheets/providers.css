@@ -1,0 +1,38 @@
+.providers label {
+  clear: both;
+  float: left;
+  margin: 0 15px;
+}
+.providers input[type=text],
+.providers input[type=url] {
+  float: left;
+}
+.providers .basic_info label {
+  width: 70px;
+}
+.providers .basic_info input {
+  width: 200px;
+}
+.providers .protocol_endpoints label {
+  width: 100px;
+}
+.providers .protocol_endpoints input {
+  width: 250px;
+}
+.providers article {
+  position: relative;
+  padding: 15px;
+  background: #fff;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 5px;
+}
+.providers article h3 span {
+  font-weight: normal;
+  font-size: .8em;
+}
+.providers article nav {
+  position: absolute;
+  bottom: 10px;
+  right: 15px;
+}

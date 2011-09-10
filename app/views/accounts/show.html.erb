@@ -11,7 +11,8 @@
     <pre class="jwt"><%= @open_id.id_token %></pre>
     <pre><%= JSON.pretty_generate @open_id.check_session!.as_json %></pre>
   </article>
-  <aside>
-    <%= link_to 'providers.title'.t, new_provider_path %>
-  </aside>
 </section>
+
+<aside>
+  <%= link_to 'providers.index.title'.t, providers_path %>
+</aside>

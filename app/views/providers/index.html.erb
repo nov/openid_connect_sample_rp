@@ -1,0 +1,9 @@
+<section>
+  <h2><%= 'providers.index.title'.t %></h2>
+  <% @providers.each do |provider| %>
+    <%= render provider %>
+  <% end %>
+  <nav>
+    <%= link_to 'providers.new.title'.t, new_provider_path %>
+  </nav>
+</section>

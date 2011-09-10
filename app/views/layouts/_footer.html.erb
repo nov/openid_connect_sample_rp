@@ -1,7 +1,7 @@
 <footer class="page_footer">
   <% if authenticated? %>
-    <%= form_tag account_path, method: :delete do  %>
-      <%= submit_tag 'Unregister'.t %>
+    <%= form_tag session_path, method: :delete do  %>
+      <%= submit_tag 'Logout'.t %>
     <% end %>
   <% end %>
   <ul>

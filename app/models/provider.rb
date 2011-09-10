@@ -1,6 +1,13 @@
 class Provider < ActiveRecord::Base
   has_many :open_ids
 
+  validates :name,                   presence: true
+  validates :identifier,             presence: true
+  validates :authorization_endpoint, presence: true
+  validates :token_endpoint,         presence: true
+  validates :check_session_endpoint, presence: true
+  validates :user_info_endpoint,     presence: true
+
   extend ActiveSupport::Memoizable
 
   def as_json(options = {})
@@ -25,7 +32,7 @@ class Provider < ActiveRecord::Base
   end
 
   def public_key
-    if public_key_endpoint
+    if public_key_endpoint.present?
       _public_key_ = HTTPClient.get_content client.send(:absolute_uri_for, public_key_endpoint)
       OpenSSL::PKey::RSA.new _public_key_
     end

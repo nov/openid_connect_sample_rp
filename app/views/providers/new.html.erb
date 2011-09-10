@@ -1,1 +1,4 @@
-<%= render 'providers/form' %>
+<h2><%= 'providers.new.title'.t %></h2>
+<%= form_for @provider do |f| %>
+  <%= render 'providers/form', f: f %>
+<% end %>

@@ -6,7 +6,7 @@
       <% Provider.all.each do |provider| %>
         <li>
           <%= form_tag provider_open_id_path(provider) do %>
-            <%= submit_tag 'provider.login'.t(provider: provider.name) %>
+            <%= submit_tag 'open_ids.create.title'.t(provider: provider.name) %>
           <% end %>
         </li>
       <% end %>

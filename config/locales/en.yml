@@ -2,6 +2,23 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
+  # model base
+  provider:
+    basic_info: Basic Client Profile
+    protocol_endpoints: Protocol Endpoints
+    identifier: Client ID
+    scope: Scope
+    authorization_endpoint: Authorization Endpoint
+    token_endpoint: Token Endpoint
+    check_session_endpoint: Check Session Endpoint
+    user_info_endpoint: UserInfo Endpoint
+    public_key_endpoint: Private Key
+    placeholder:
+      name: for display purpose
+      identifier: client_id
+      secret: client_secret
+      scope: space separated scopes
+  # controller base
   site:
     title: Connect Me!
     description: Don't stop connecting!
@@ -14,5 +31,13 @@ en:
     title: UserInfo
   id_token:
     title: ID Token
-  provider:
-    login: Login with %{provider}
+  open_ids:
+    create:
+      title: Login with %{provider}
+  providers:
+    index:
+      title: Manage Your OPs
+    new:
+      title: Register New OP
+    edit:
+      title: Edit OP Setting
