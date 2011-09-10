@@ -22,13 +22,9 @@ class Provider < ActiveRecord::Base
   end
 
   def check_session!(id_token)
-    if public_key
-      OpenIDConnect::ResponseObject::IdToken.from_jwt(
-        id_token, public_key
-      )
-    else
-      # TODO: Make Check Session Call
-    end
+    OpenIDConnect::ResponseObject::IdToken.from_jwt(
+      id_token, public_key || client
+    )
   end
 
   def public_key
