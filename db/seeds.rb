@@ -7,8 +7,8 @@ attributes = if Rails.env.development?
   }
 else
   {
-    identifier: 'd36b87830791a037fabf32625bf90865',
-    secret: '2c1fb5d90b1066275290871e74aeed656afc1aeccc8fec4196aa726381bffff1',
+    identifier: '333e306219ee214949a2d5565fda9a07',
+    secret: '2880fc37a047929030b730c80e3bcb6228e57b7859149270fac274e273c79d03',
     host: 'connect-op.heroku.com',
     scheme: 'https'
   }
