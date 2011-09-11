@@ -29,9 +29,11 @@ class Provider < ActiveRecord::Base
 
   def public_key
     if public_key_endpoint.present?
-      _public_key_ = HTTPClient.get_content client.send(:absolute_uri_for, public_key_endpoint)
-      OpenSSL::PKey::RSA.new _public_key_
+      pem = HTTPClient.get_content client.send(:absolute_uri_for, public_key_endpoint)
+      to_public_key pem
     end
+  rescue OpenSSL::PKey::RSAError
+    nil
   end
   memoize :public_key
 
@@ -56,5 +58,13 @@ class Provider < ActiveRecord::Base
     open_id.access_token, open_id.id_token = access_token.access_token, access_token.id_token
     open_id.save!
     open_id.account || Account.create!(open_id: open_id)
+  end
+
+  private
+
+  def to_public_key(pem)
+    OpenSSL::PKey::RSA.new pem
+  rescue OpenSSL::PKey::RSAError
+    OpenSSL::X509::Certificate.new(pem).public_key
   end
 end
