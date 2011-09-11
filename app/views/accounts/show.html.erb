@@ -4,13 +4,15 @@
   </h2>
   <article>
     <h3><%= 'user_info.title'.t %></h3>
-    <pre><%=
-      begin
-        JSON.pretty_generate @user_info.as_json
-      rescue
-        @user_info.errors.full_messages.join("\n")
-      end
-    %></pre>
+    <pre><%= JSON.pretty_generate @user_info.as_json(skip_validation: true) %></pre>
+    <% unless @user_info.valid? %>
+      <dl>
+        <dt><%= 'user_info.errors'.t %></dt>
+        <% @user_info.errors.full_messages.each do |error| %>
+          <dd><%= error %></dd>
+        <% end %>
+      </dl>
+    <% end %>
   </article>
   <article>
     <h3><%= 'id_token.title'.t %></h3>
