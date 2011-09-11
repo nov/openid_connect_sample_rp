@@ -1,4 +1,5 @@
-.accounts pre {
+.accounts pre,
+.accounts dl {
   overflow-x: scroll;
   padding: 15px;
   background: #fff;
@@ -8,4 +9,7 @@
 }
 .accounts pre.jwt {
   word-wrap: break-word;
+}
+.accounts .errors {
+  color: red;
 }
