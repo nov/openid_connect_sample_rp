@@ -23,8 +23,8 @@ en:
     title: Nov's RP
     description: Connect Now!
   top:
-    title: What's this?
-    description: Sample RP for openid-connect.heroku.com
+    title: Let me try to work with your OP :)
+    description: You can use this app as a sample RP for your OP or sample code for your RP.
   accounts:
     title: Hello, %{name}
   user_info:
