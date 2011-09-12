@@ -1,1 +1,8 @@
-.top {}
+.top .notice {
+  color: red;
+  margin-top: 15px;
+  padding: 15px;
+  background: #fff;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+}
