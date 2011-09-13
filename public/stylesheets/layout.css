@@ -24,6 +24,14 @@ dl dt {
 dl dd {
   padding-left: 1em;
 }
+legend {
+  font-weight: bolder;
+}
+input[type=text],
+input[type=url] {
+  font-size: 16px;
+  padding: 2px 4px;
+}
 input[type=submit] {
   -webkit-box-shadow: #fff 0px 0.08em 0.2em 1px inset;
   background: #fff -webkit-gradient(

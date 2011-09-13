@@ -2,22 +2,25 @@
   clear: both;
   float: left;
   margin: 0 15px;
+  width: 100px;
 }
 .providers input[type=text],
 .providers input[type=url] {
   float: left;
+  width: 300px;
 }
-.providers .basic_info label {
-  width: 70px;
-}
-.providers .basic_info input {
+.providers nav input[type=text] {
+  margin: 7px 5px;
   width: 200px;
 }
-.providers .protocol_endpoints label {
-  width: 100px;
+.providers fieldset {
+  margin-bottom: 15px;
+}
+.providers fieldset legend {
+  margin-bottom: 5px;
 }
 .providers .protocol_endpoints input {
-  width: 250px;
+  width: 400px;
 }
 .providers article {
   position: relative;
