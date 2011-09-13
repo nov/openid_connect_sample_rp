@@ -8,7 +8,17 @@ class Provider < ActiveRecord::Base
   validates :check_session_endpoint, presence: true
   validates :user_info_endpoint,     presence: true
 
-  extend ActiveSupport::Memoizable
+  def self.discover!(host)
+    config = OpenIDConnect::Discovery::Provider::Config.discover! host
+    new(
+      name:                   host,
+      scope:                  config.scopes_supported.join(' '),
+      authorization_endpoint: config.authorization_endpoint,
+      token_endpoint:         config.token_endpoint,
+      check_session_endpoint: config.check_session_endpoint,
+      user_info_endpoint:     config.user_info_endpoint
+    )
+  end
 
   def as_json(options = {})
     [

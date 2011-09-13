@@ -6,7 +6,7 @@ class ProvidersController < ApplicationController
   end
 
   def new
-    @provider = current_account.providers.new
+    @provider = discover params[:host]
   end
 
   def create
@@ -39,5 +39,19 @@ class ProvidersController < ApplicationController
     @provider = current_account.providers.find params[:id]
     @provider.destroy
     redirect_to providers_url
+  end
+
+  private
+
+  def discover(host)
+    Provider.discover! host
+  rescue OpenIDConnect::Discovery::DiscoveryFailed, OpenIDConnect::Discovery::InvalidIdentifier => e
+    flash[:error] = {
+      title: 'Discovery Failed',
+      text: ' Please configure your provider manually.'
+    }
+    Provider.new(
+      name: host
+    )
   end
 end

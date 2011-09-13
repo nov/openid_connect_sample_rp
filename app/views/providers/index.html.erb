@@ -4,6 +4,9 @@
     <%= render provider %>
   <% end %>
   <nav>
-    <%= link_to 'providers.new.title'.t, new_provider_path %>
+    <%= form_tag new_provider_path, method: :get do %>
+      <%= text_field_tag :host, nil, placeholder: 'provider.example.com', required: true %>
+      <%= submit_tag 'providers.discover'.t %>
+    <% end %>
   </nav>
 </section>
