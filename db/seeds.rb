@@ -1,7 +1,7 @@
 attributes = if Rails.env.development?
   {
-    identifier: '6e14c307831c15978ef954fc6d08bdaa',
-    secret: '76c9db9a7dc001de84951b6e60850ee12a997b5f8d3f9bcfe612b4d2d7d28213',
+    identifier: 'c6aca6537869459002ccec9852952f73',
+    secret: '37b202400da8dbf11da0f71a3630e5daba322786675a36673bd37f325790be5e',
     host: 'op.dev',
     scheme: 'http'
   }
