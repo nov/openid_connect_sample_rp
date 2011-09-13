@@ -13,7 +13,7 @@ class Provider < ActiveRecord::Base
   def as_json(options = {})
     [
       :identifier, :secret, :scope, :host, :scheme,
-      :authorization_endpoint, :token_endpoint, :check_session_endpoint, :user_info_endpoint, :public_key_endpoint
+      :authorization_endpoint, :token_endpoint, :check_session_endpoint, :user_info_endpoint
     ].inject({}) do |hash, key|
       hash.merge!(
         key => self.send(key)
@@ -24,19 +24,9 @@ class Provider < ActiveRecord::Base
   def check_session!(id_token)
     raise OpenIDConnect::Exception.new('No ID Token was given.') if id_token.blank?
     OpenIDConnect::ResponseObject::IdToken.from_jwt(
-      id_token, public_key || client
+      id_token, client
     )
   end
-
-  def public_key
-    if public_key_endpoint.present?
-      pem = HTTPClient.get_content client.send(:absolute_uri_for, public_key_endpoint)
-      to_public_key pem
-    end
-  rescue OpenSSL::PKey::RSAError
-    nil
-  end
-  memoize :public_key
 
   def client
     @client ||= OpenIDConnect::Client.new as_json
@@ -59,13 +49,5 @@ class Provider < ActiveRecord::Base
     open_id.access_token, open_id.id_token = access_token.access_token, access_token.id_token
     open_id.save!
     open_id.account || Account.create!(open_id: open_id)
-  end
-
-  private
-
-  def to_public_key(pem)
-    OpenSSL::PKey::RSA.new pem
-  rescue OpenSSL::PKey::RSAError
-    OpenSSL::X509::Certificate.new(pem).public_key
   end
 end

@@ -13,10 +13,6 @@
       <dt><%= "provider.#{key}".t %></dt>
       <dd><%= provider.send key %></dd>
     <% end %>
-    <% if provider.public_key %>
-      <dt><%= 'provider.public_key'.t %></dt>
-      <dd><%= provider.public_key %></dd>
-    <% end %>
   </dl>
   <nav>
     <%= link_to 'providers.edit.title'.t, edit_provider_path(provider) %>

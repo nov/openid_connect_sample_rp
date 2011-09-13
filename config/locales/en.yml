@@ -12,7 +12,6 @@ en:
     token_endpoint: Token Endpoint
     check_session_endpoint: Check Session Endpoint
     user_info_endpoint: UserInfo Endpoint
-    public_key_endpoint: Private Key
     placeholder:
       name: for display purpose
       identifier: client_id

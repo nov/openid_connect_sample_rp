@@ -8,7 +8,7 @@
   </fieldset>
   <fieldset class="protocol_endpoints">
     <legend><%= 'provider.protocol_endpoints'.t %></legend>
-    <% [:authorization, :token, :check_session, :user_info, :public_key].each do |key| %>
+    <% [:authorization, :token, :check_session, :user_info].each do |key| %>
       <%= f.label key %>
       <%= f.url_field "#{key}_endpoint", placeholder: "https://client.example.com/#{key}" %>
     <% end %>

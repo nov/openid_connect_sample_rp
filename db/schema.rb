@@ -42,7 +42,6 @@ ActiveRecord::Schema.define(:version => 20110909022417) do
     t.string   "token_endpoint"
     t.string   "check_session_endpoint"
     t.string   "user_info_endpoint"
-    t.string   "public_key_endpoint"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
