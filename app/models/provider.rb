@@ -45,7 +45,7 @@ class Provider < ActiveRecord::Base
   def authorization_uri(redirect_uri)
     client.redirect_uri = redirect_uri
     client.authorization_uri(
-      response_type: [:code, :id_token],
+      response_type: :code,
       scope: scope
     )
   end
