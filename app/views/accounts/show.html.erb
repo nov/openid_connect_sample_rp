@@ -3,11 +3,15 @@
     <%= 'accounts.title'.t(name: @user_info.name) %>
   </h2>
   <article>
-    <h3><%= 'user_info.title'.t %></h3>
+    <h3><%= 'open_id.access_token.title'.t %></h3>
+    <pre><%= @open_id.access_token %></pre>
+  </article>
+  <article>
+    <h3><%= 'open_id.user_info.title'.t %></h3>
     <pre><%= JSON.pretty_generate @user_info.as_json(skip_validation: true) %></pre>
     <% unless @user_info.valid? %>
       <dl class="errors">
-        <dt><%= 'user_info.errors'.t %></dt>
+        <dt><%= 'open_id.user_info.errors'.t %></dt>
         <% @user_info.errors.full_messages.each do |error| %>
           <dd><%= error %></dd>
         <% end %>
@@ -15,8 +19,10 @@
     <% end %>
   </article>
   <article>
-    <h3><%= 'id_token.title'.t %></h3>
+    <h3><%= 'open_id.id_token.title'.t %></h3>
+    <!--
     <pre class="jwt"><%= @open_id.id_token %></pre>
+    -->
     <pre><%= JSON.pretty_generate @open_id.check_session!.as_json %></pre>
   </article>
 </section>

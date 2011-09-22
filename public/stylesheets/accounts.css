@@ -1,3 +1,6 @@
+.accounts article {
+  margin: 20px 0;
+}
 .accounts pre,
 .accounts dl {
   overflow-x: scroll;

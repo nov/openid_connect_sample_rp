@@ -17,6 +17,14 @@ en:
       identifier: client_id
       secret: client_secret
       scope: space separated scopes
+  open_id:
+    access_token:
+      title: Access Token
+    user_info:
+      title: UserInfo
+      errors: Errors
+    id_token:
+      title: ID Token
   # controller base
   site:
     title: Nov's RP
@@ -26,10 +34,6 @@ en:
     description: You can use this app as a sample RP for your OP or sample code for your RP.
   accounts:
     title: Hello, %{name}
-  user_info:
-    title: UserInfo
-  id_token:
-    title: ID Token
   open_ids:
     create:
       title: Login with %{provider}
