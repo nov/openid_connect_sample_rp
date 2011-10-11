@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110909022417) do
+ActiveRecord::Schema.define(:version => 20111011035705) do
 
   create_table "accounts", :force => true do |t|
     t.datetime "created_at"
@@ -44,6 +44,8 @@ ActiveRecord::Schema.define(:version => 20110909022417) do
     t.string   "user_info_endpoint"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "dynamic",                :default => false
+    t.datetime "expires_at"
   end
 
 end

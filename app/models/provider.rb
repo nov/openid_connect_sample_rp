@@ -1,12 +1,22 @@
 class Provider < ActiveRecord::Base
   has_many :open_ids
+  belongs_to :account
 
+  validates :account,                presence: {unless: :dynamic?}
   validates :name,                   presence: true
   validates :identifier,             presence: true
   validates :authorization_endpoint, presence: true
   validates :token_endpoint,         presence: true
   validates :check_session_endpoint, presence: true
   validates :user_info_endpoint,     presence: true
+
+  scope :dynamic, where(dynamic: true)
+  scope :valid, lambda {
+    where {
+      (expires_at == nil) |
+      (expires_at >= Time.now.utc)
+    }
+  }
 
   def self.discover!(host)
     config = OpenIDConnect::Discovery::Provider::Config.discover! host

@@ -4,6 +4,7 @@ gem 'rails', '3.0.10'
 gem 'jquery-rails'
 gem 'openid_connect'
 gem 'html5_validators'
+gem 'squeel'
 
 group :development, :test do
   gem 'sqlite3'

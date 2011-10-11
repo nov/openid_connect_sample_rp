@@ -3,7 +3,7 @@
   <p><%= 'top.description'.t %></p>
   <nav class="connect">
     <ul>
-      <% Provider.all.each do |provider| %>
+      <% Provider.valid.all.each do |provider| %>
         <li>
           <%= form_tag provider_open_id_path(provider) do %>
             <%= submit_tag 'open_ids.create.title'.t(provider: provider.name) %>
