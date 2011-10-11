@@ -3,7 +3,7 @@
   <p><%= 'top.description'.t %></p>
   <nav class="connect">
     <ul>
-      <% Provider.valid.all.each do |provider| %>
+      <% Provider.listable.all.each do |provider| %>
         <li>
           <%= form_tag provider_open_id_path(provider) do %>
             <%= submit_tag 'open_ids.create.title'.t(provider: provider.name) %>
@@ -11,11 +11,8 @@
         </li>
       <% end %>
     </ul>
-    <!--
-    <div class="notice">
-      <p>Since Google OP has several difference from current Connect spec, this RP won't work with it.</p>
-      <p>However, you can use my OP <%= link_to '(connect-op.heroku.com)', 'https://connect-op.heroku.com' %> as an RP against it.</p>
-    </div>
-    -->
+    <%= form_tag dynamic_providers_path do %>
+      <%= text_field_tag :host %>
+    <% end %>
   </nav>
 </article>

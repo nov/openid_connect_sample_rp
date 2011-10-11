@@ -11,7 +11,7 @@ class OpenId < ActiveRecord::Base
     )
   end
 
-  def check_session!
-    provider.check_session! id_token
+  def check_id!
+    provider.check_id! id_token
   end
 end

@@ -18,7 +18,7 @@ attributes.merge!(
   scope: 'email profile address PPID',
   authorization_endpoint: '/authorizations/new',
   token_endpoint: '/access_tokens',
-  check_session_endpoint: '/id_token',
+  check_id_endpoint: '/id_token',
   user_info_endpoint: '/user_info'
 )
 

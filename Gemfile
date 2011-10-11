@@ -5,6 +5,7 @@ gem 'jquery-rails'
 gem 'openid_connect'
 gem 'html5_validators'
 gem 'squeel'
+gem 'rest-client'
 
 group :development, :test do
   gem 'sqlite3'

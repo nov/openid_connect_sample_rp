@@ -9,7 +9,7 @@
       <dt><%= 'provider.scope'.t %></dt>
       <dd><%= provider.scope %></dd>
     <% end %>
-    <% [:authorization_endpoint, :token_endpoint, :check_session_endpoint, :user_info_endpoint].each do |key| %>
+    <% [:authorization_endpoint, :token_endpoint, :check_id_endpoint, :user_info_endpoint].each do |key| %>
       <dt><%= "provider.#{key}".t %></dt>
       <dd><%= provider.send key %></dd>
     <% end %>

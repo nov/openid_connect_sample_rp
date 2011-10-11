@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(:version => 20111011035705) do
     t.string   "scheme"
     t.string   "authorization_endpoint"
     t.string   "token_endpoint"
-    t.string   "check_session_endpoint"
+    t.string   "check_id_endpoint"
     t.string   "user_info_endpoint"
     t.datetime "created_at"
     t.datetime "updated_at"
