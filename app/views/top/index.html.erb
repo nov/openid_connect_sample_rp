@@ -11,8 +11,12 @@
         </li>
       <% end %>
     </ul>
-    <%= form_tag dynamic_providers_path do %>
-      <%= text_field_tag :host %>
-    <% end %>
+    <div class="notice">
+      <p>If your Connect provider isn't above, discover it by its OP identifier.</p>
+      <%= form_tag dynamic_providers_path do %>
+        <%= text_field_tag :host, nil, placeholder: 'connect-op.heroku.com' %>
+        <%= submit_tag 'dynamic_providers.create.title'.t %>
+      <% end %>
+    </div>
   </nav>
 </article>

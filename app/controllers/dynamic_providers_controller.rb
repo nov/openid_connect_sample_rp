@@ -2,7 +2,7 @@ class DynamicProvidersController < ApplicationController
   rescue_from OpenIDConnect::Discovery::DiscoveryFailed, OpenIDConnect::Discovery::InvalidIdentifier do |e|
     flash[:error] = {
       title: 'Discovery Failed',
-      text: e.message
+      text: 'Could not discover your OP.'
     }
     redirect_to root_url
   end
@@ -13,8 +13,5 @@ class DynamicProvidersController < ApplicationController
     redirect_to provider.authorization_uri(
       provider_open_id_url(provider)
     )
-  rescue => e
-    logger.info e.message
-    raise e
   end
 end

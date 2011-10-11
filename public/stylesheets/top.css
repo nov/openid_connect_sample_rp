@@ -6,3 +6,6 @@
   border: 2px solid #ccc;
   border-radius: 8px;
 }
+.top .notice input[type=text] {
+  width: 250px;
+}

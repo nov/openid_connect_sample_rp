@@ -44,3 +44,6 @@ en:
       title: Register New OP
     edit:
       title: Edit OP Setting
+  dynamic_providers:
+    create:
+      title: Discover
