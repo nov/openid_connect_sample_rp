@@ -21,8 +21,7 @@ class Provider < ActiveRecord::Base
   }
 
   def associate!(redirect_uri)
-    _endpoint_ = registration_endpoint
-    res = RestClient.post _endpoint_, {
+    res = RestClient.post registration_endpoint, {
       type: 'client_associate',
       application_name: 'NOV RP',
       application_type: 'web',
@@ -35,19 +34,14 @@ class Provider < ActiveRecord::Base
     if attributes[:expires_in]
       self.expires_at = attributes[:expires_in].from_now
     end
-      logger.info _endpoint_
     save!
     # update redirect_uri here
-    logger.info _endpoint_
-    RestClient.post _endpoint_, {
+    RestClient.post registration_endpoint, {
       type: 'client_update',
       client_id: identifier,
       client_secret: secret,
       redirect_uri: redirect_uri.sub('__provider_id__', self.id.to_s)
     }
-  rescue => e
-    logger.info e.message
-    raise e
   end
 
   def self.discover!(host)
