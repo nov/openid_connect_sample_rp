@@ -2,14 +2,13 @@ class Provider < ActiveRecord::Base
   has_many :open_ids
   belongs_to :account
 
+  validates :issuer,                 presence: true, uniqueness: {allow_nil: true}
   validates :name,                   presence: true
-  validates :identifier,             presence: true
-  validates :authorization_endpoint, presence: true
-  validates :token_endpoint,         presence: true
-  validates :check_id_endpoint,      presence: true
-  validates :user_info_endpoint,     presence: true
-
-  attr_accessor :registration_endpoint
+  validates :identifier,             presence: {if: :associated?}
+  validates :authorization_endpoint, presence: {if: :associated?}
+  validates :token_endpoint,         presence: {if: :associated?}
+  validates :check_id_endpoint,      presence: {if: :associated?}
+  validates :user_info_endpoint,     presence: {if: :associated?}
 
   scope :dynamic,  where(dynamic: true)
   scope :listable, where(dynamic: false)
@@ -20,41 +19,47 @@ class Provider < ActiveRecord::Base
     }
   }
 
+  def expired?
+    expires_at.try(:past?)
+  end
+
+  def associated?
+    identifier.present? && !expired?
+  end
+
   def associate!(redirect_uri)
-    res = RestClient.post registration_endpoint, {
+    config = OpenIDConnect::Discovery::Provider::Config.discover! issuer
+    res = RestClient.post config.registration_endpoint, {
       type: 'client_associate',
       application_name: 'NOV RP',
       application_type: 'web',
       redirect_uri: redirect_uri
     }
-    attributes = JSON.parse(res.body).with_indifferent_access
-    self.identifier = attributes[:client_id]
-    self.secret = attributes[:client_secret]
-    self.dynamic = true
-    if attributes[:expires_in]
-      self.expires_at = attributes[:expires_in].from_now
-    end
-    save!
-    # update redirect_uri here
-    RestClient.post registration_endpoint, {
-      type: 'client_update',
-      client_id: identifier,
-      client_secret: secret,
-      redirect_uri: redirect_uri.sub('__provider_id__', self.id.to_s)
-    }
-  end
-
-  def self.discover!(host)
-    config = OpenIDConnect::Discovery::Provider::Config.discover! host
-    new(
-      name:                   host,
+    credentials = JSON.parse(res.body).with_indifferent_access
+    self.attributes = {
+      identifier:             credentials[:client_id],
+      secret:                 credentials[:client_secret],
       scope:                  config.scopes_supported.join(' '),
       authorization_endpoint: config.authorization_endpoint,
       token_endpoint:         config.token_endpoint,
       check_id_endpoint:      config.check_id_endpoint,
       user_info_endpoint:     config.user_info_endpoint,
-      registration_endpoint:  config.registration_endpoint
-    )
+      dynamic:                true,
+      expires_at:             attributes[:expires_in].try(:from_now)
+    }
+    save!
+  end
+
+  def self.discover!(host)
+    issuer = OpenIDConnect::Discovery::Provider.discover!(host).location
+    if provider = find_by_issuer(issuer)
+      provider
+    else
+      create(
+        issuer: issuer,
+        name: host
+      )
+    end
   end
 
   def as_json(options = {})

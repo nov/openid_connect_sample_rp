@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(:version => 20110909022417) do
 
   create_table "providers", :force => true do |t|
     t.integer  "account_id"
+    t.string   "issuer"
     t.string   "name"
     t.string   "identifier"
     t.string   "secret"
