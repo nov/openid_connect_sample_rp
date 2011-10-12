@@ -3,6 +3,7 @@ attributes = if Rails.env.development?
     identifier: 'c6aca6537869459002ccec9852952f73',
     secret: '37b202400da8dbf11da0f71a3630e5daba322786675a36673bd37f325790be5e',
     host: 'op.dev',
+    issuer: 'https://op.dev',
     scheme: 'http'
   }
 else
@@ -10,6 +11,7 @@ else
     identifier: '333e306219ee214949a2d5565fda9a07',
     secret: '2880fc37a047929030b730c80e3bcb6228e57b7859149270fac274e273c79d03',
     host: 'connect-op.heroku.com',
+    issuer: 'https://connect-op.heroku.com',
     scheme: 'https'
   }
 end
