@@ -6,7 +6,6 @@ class CreateOpenIds < ActiveRecord::Migration
       t.string :id_token, limit: 1024
       t.timestamps
     end
-    add_index :open_ids, :identifier, unique: true
   end
 
   def self.down
