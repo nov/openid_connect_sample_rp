@@ -75,7 +75,7 @@ class Provider < ActiveRecord::Base
 
   def check_id!(id_token)
     raise OpenIDConnect::Exception.new('No ID Token was given.') if id_token.blank?
-    OpenIDConnect::ResponseObject::IdToken.from_jwt(
+    OpenIDConnect::ResponseObject::IdToken.decode(
       id_token, client
     )
   end
