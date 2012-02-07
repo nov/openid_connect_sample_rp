@@ -29,23 +29,23 @@ class Provider < ActiveRecord::Base
 
   def associate!(redirect_uri)
     config = OpenIDConnect::Discovery::Provider::Config.discover! issuer
-    res = RestClient.post config.registration_endpoint, {
-      type: 'client_associate',
+    registrar = OpenIDConnect::Client::Registrar.new(
+      config.registration_endpoint,
       application_name: 'NOV RP',
       application_type: 'web',
-      redirect_uri: redirect_uri
-    }
-    credentials = JSON.parse(res.body).with_indifferent_access
+      redirect_uris: redirect_uri
+    )
+    client = registrar.associate!
     self.attributes = {
-      identifier:             credentials[:client_id],
-      secret:                 credentials[:client_secret],
+      identifier:             client.identifier,
+      secret:                 client.secret,
       scope:                  config.scopes_supported.join(' '),
       authorization_endpoint: config.authorization_endpoint,
       token_endpoint:         config.token_endpoint,
       check_id_endpoint:      config.check_id_endpoint,
       user_info_endpoint:     config.user_info_endpoint,
       dynamic:                true,
-      expires_at:             attributes[:expires_in].try(:from_now)
+      expires_at:             client.expires_in.try(:from_now)
     }
     save!
   end
