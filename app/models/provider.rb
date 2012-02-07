@@ -29,13 +29,12 @@ class Provider < ActiveRecord::Base
 
   def associate!(redirect_uri)
     config = OpenIDConnect::Discovery::Provider::Config.discover! issuer
-    registrar = OpenIDConnect::Client::Registrar.new(
+    client = OpenIDConnect::Client::Registrar.new(
       config.registration_endpoint,
       application_name: 'NOV RP',
       application_type: 'web',
       redirect_uris: redirect_uri
-    )
-    client = registrar.associate!
+    ).associate!
     self.attributes = {
       identifier:             client.identifier,
       secret:                 client.secret,
