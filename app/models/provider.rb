@@ -83,19 +83,25 @@ class Provider < ActiveRecord::Base
     @client ||= OpenIDConnect::Client.new as_json
   end
 
-  def authorization_uri(redirect_uri)
+  def authorization_uri(redirect_uri, nonce)
     client.redirect_uri = redirect_uri
     client.authorization_uri(
       response_type: :code,
+      nonce: nonce,
       scope: scope
     )
   end
 
-  def authenticate(redirect_uri, code)
+  def authenticate(redirect_uri, code, nonce)
     client.redirect_uri = redirect_uri
     client.authorization_code = code
     access_token = client.access_token!
     id_token = check_id! access_token.id_token
+    id_token.verify!(
+      issuer: issuer,
+      client_id: identifier,
+      nonce: nonce
+    )
     open_id = self.open_ids.find_or_initialize_by_identifier id_token.user_id
     open_id.access_token, open_id.id_token = access_token.access_token, access_token.id_token
     open_id.save!

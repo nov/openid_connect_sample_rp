@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   include Authentication
+  include Nonce
   include Notification
 
   rescue_from Rack::OAuth2::Client::Error, OpenIDConnect::Exception do |e|

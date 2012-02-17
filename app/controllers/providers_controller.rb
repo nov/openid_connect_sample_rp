@@ -13,7 +13,8 @@ class ProvidersController < ApplicationController
       provider.associate! provider_open_id_url(provider)
     end
     redirect_to provider.authorization_uri(
-      provider_open_id_url(provider)
+      provider_open_id_url(provider),
+      new_nonce
     )
   end
 end
