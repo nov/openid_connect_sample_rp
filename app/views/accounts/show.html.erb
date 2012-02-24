@@ -20,9 +20,7 @@
   </article>
   <article>
     <h3><%= 'open_id.id_token.title'.t %></h3>
-    <!--
     <pre class="jwt"><%= @open_id.id_token %></pre>
-    -->
     <pre><%= JSON.pretty_generate @open_id.check_id!.as_json %></pre>
   </article>
 </section>
