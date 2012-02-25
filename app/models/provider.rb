@@ -33,7 +33,8 @@ class Provider < ActiveRecord::Base
       config.registration_endpoint,
       application_name: 'NOV RP',
       application_type: 'web',
-      redirect_uris: redirect_uri
+      redirect_uris: redirect_uri,
+      user_id_type: 'pairwise'
     ).associate!
     self.attributes = {
       identifier:             client.identifier,
