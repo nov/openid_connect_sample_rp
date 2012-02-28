@@ -89,7 +89,18 @@ class Provider < ActiveRecord::Base
     client.authorization_uri(
       response_type: :code,
       nonce: nonce,
-      scope: scope
+      scope: scope,
+      request: OpenIDConnect::RequestObject.new(
+        id_token: {
+          max_age: 10
+        },
+        user_info: {
+          claims: {
+            name: :required,
+            email: :optional
+          }
+        }
+      ).to_jwt(client.secret, :HS256)
     )
   end
 
