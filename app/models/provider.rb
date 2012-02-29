@@ -89,7 +89,7 @@ class Provider < ActiveRecord::Base
     client.authorization_uri(
       response_type: :code,
       nonce: nonce,
-      scope: scope,
+      scope: :openid, #scope,
       request: OpenIDConnect::RequestObject.new(
         id_token: {
           max_age: 10
