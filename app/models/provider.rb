@@ -92,7 +92,13 @@ class Provider < ActiveRecord::Base
       scope: :openid, #scope,
       request: OpenIDConnect::RequestObject.new(
         id_token: {
-          max_age: 10
+          max_age: 10,
+          claims: {
+            auth_time: nil,
+            acr: {
+              values: ['0', '1', '2']
+            }
+          }
         },
         user_info: {
           claims: {

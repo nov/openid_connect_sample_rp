@@ -52,7 +52,7 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.17.2)
-    openid_connect (0.2.0.alpha2)
+    openid_connect (0.2.0.alpha3)
       activemodel (>= 3)
       attr_required (>= 0.0.5)
       json (>= 1.4.3)
@@ -130,7 +130,7 @@ PLATFORMS
 DEPENDENCIES
   html5_validators
   jquery-rails
-  openid_connect (= 0.2.0.alpha2)
+  openid_connect (= 0.2.0.alpha3)
   pg
   rack-ssl
   rails (= 3.0.10)
