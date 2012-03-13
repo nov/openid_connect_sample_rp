@@ -33,6 +33,11 @@
       );
       window.navigator.startActivity(intent, function (result) {
         console.info(result);
+        $('.connect').append(
+          $('<pre />').append(
+            JSON.stringify(result, null, 2)
+          )
+        );
       });
     });
   });
