@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.10'
+gem 'rails'
 gem 'jquery-rails'
 gem 'openid_connect', '0.2.0.alpha3'
 gem 'html5_validators'

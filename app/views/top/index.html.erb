@@ -1,3 +1,5 @@
+<%= javascript_include_tag 'http://webintents.org/webintents.js' %>
+
 <article>
   <h2><%= 'top.title'.t %></h2>
   <p><%= 'top.description'.t %></p>
@@ -17,6 +19,21 @@
         <%= text_field_tag :host, nil, placeholder: 'connect-op.heroku.com' %>
         <%= submit_tag 'providers.create.title'.t %>
       <% end %>
+      <p class="intent"><%= submit_tag 'Or Try WebIntents?', :id => 'intent' %></p>
     </div>
   </nav>
 </article>
+
+<script>
+  $(function () {
+    $('#intent').click(function () {
+      var intent = new Intent(
+        "http://openid.net/connect/webintents",
+        "application/json"
+      );
+      window.navigator.startActivity(intent, function (result) {
+        console.info(result);
+      });
+    });
+  });
+</script>
