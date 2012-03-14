@@ -28,16 +28,18 @@
   $(function () {
     $('#intent').click(function () {
       var intent = new Intent(
-        "http://openid.net/connect/webintents",
+        "http://openid.net/connect/discovery/simple-web-discovery",
         "application/json"
       );
       window.navigator.startActivity(intent, function (result) {
-        console.info(result);
-        $('.connect').append(
-          $('<pre />').append(
-            JSON.stringify(result, null, 2)
-          )
-        );
+        var op_identifier = result.locations[0];
+        var form = $('form[action="<%= providers_path %>"]');
+        $('input#host', form).val(op_identifier);
+        alert([
+          'WebIntents Response',
+          JSON.stringify(result, null, 2)
+        ].join("\n\n"));
+        form.submit();
       });
     });
   });
