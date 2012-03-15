@@ -14,8 +14,8 @@
 ActiveRecord::Schema.define(:version => 20110909022417) do
 
   create_table "accounts", :force => true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "open_ids", :force => true do |t|
@@ -24,8 +24,8 @@ ActiveRecord::Schema.define(:version => 20110909022417) do
     t.string   "identifier"
     t.string   "access_token"
     t.string   "id_token",     :limit => 1024
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
   end
 
   create_table "providers", :force => true do |t|
@@ -43,8 +43,8 @@ ActiveRecord::Schema.define(:version => 20110909022417) do
     t.string   "user_info_endpoint"
     t.boolean  "dynamic",                :default => false
     t.datetime "expires_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
   end
 
 end
