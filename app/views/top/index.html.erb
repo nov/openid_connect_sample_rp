@@ -27,11 +27,11 @@
 <script>
   $(function () {
     $('#intent').click(function () {
-      var intent = new Intent(
+      var intent = new WebKitIntent(
         "http://openid.net/connect/discovery/simple-web-discovery",
         "application/json"
       );
-      window.navigator.startActivity(intent, function (result) {
+      window.navigator.webkitStartActivity(intent, function (result) {
         var op_identifier = result.locations[0];
         var form = $('form[action="<%= providers_path %>"]');
         $('input#host', form).val(op_identifier);
