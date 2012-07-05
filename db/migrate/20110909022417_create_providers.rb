@@ -3,7 +3,7 @@ class CreateProviders < ActiveRecord::Migration
     create_table :providers do |t|
       t.belongs_to :account
       t.string :issuer, :name, :identifier, :secret, :scope, :host, :scheme
-      t.string :authorization_endpoint, :token_endpoint, :check_id_endpoint, :user_info_endpoint
+      t.string :authorization_endpoint, :token_endpoint, :user_info_endpoint, :x509_url
       t.boolean :dynamic, default: false
       t.datetime :expires_at
       t.timestamps

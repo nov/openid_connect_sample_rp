@@ -10,7 +10,6 @@ en:
     scope: Scope
     authorization_endpoint: Authorization Endpoint
     token_endpoint: Token Endpoint
-    check_id_endpoint: Check ID Endpoint
     user_info_endpoint: UserInfo Endpoint
     placeholder:
       name: for display purpose

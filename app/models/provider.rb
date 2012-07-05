@@ -7,7 +7,6 @@ class Provider < ActiveRecord::Base
   validates :identifier,             presence: {if: :associated?}
   validates :authorization_endpoint, presence: {if: :associated?}
   validates :token_endpoint,         presence: {if: :associated?}
-  validates :check_id_endpoint,      presence: {if: :associated?}
   validates :user_info_endpoint,     presence: {if: :associated?}
 
   scope :dynamic,  where(dynamic: true)
@@ -42,8 +41,8 @@ class Provider < ActiveRecord::Base
       scope:                  config.scopes_supported.join(' '),
       authorization_endpoint: config.authorization_endpoint,
       token_endpoint:         config.token_endpoint,
-      check_id_endpoint:      config.check_id_endpoint,
       user_info_endpoint:     config.user_info_endpoint,
+      x509_url:               config.x509_url,
       dynamic:                true,
       expires_at:             client.expires_in.try(:from_now)
     }
@@ -65,19 +64,12 @@ class Provider < ActiveRecord::Base
   def as_json(options = {})
     [
       :identifier, :secret, :scope, :host, :scheme,
-      :authorization_endpoint, :token_endpoint, :check_id_endpoint, :user_info_endpoint
+      :authorization_endpoint, :token_endpoint, :user_info_endpoint, :x509_url
     ].inject({}) do |hash, key|
       hash.merge!(
         key => self.send(key)
       )
     end
-  end
-
-  def check_id!(id_token)
-    raise OpenIDConnect::Exception.new('No ID Token was given.') if id_token.blank?
-    OpenIDConnect::ResponseObject::IdToken.decode(
-      id_token, client
-    )
   end
 
   def client
@@ -110,17 +102,26 @@ class Provider < ActiveRecord::Base
     )
   end
 
+  def public_key
+    @cert ||= OpenSSL::X509::Certificate.new open(x509_url).read
+    @cert.public_key
+  end
+
+  def decode_id(id_token)
+    OpenIDConnect::ResponseObject::IdToken.decode id_token, public_key
+  end
+
   def authenticate(redirect_uri, code, nonce)
     client.redirect_uri = redirect_uri
     client.authorization_code = code
     access_token = client.access_token!
-    id_token = check_id! access_token.id_token
-    id_token.verify!(
+    _id_token_ = decode_id access_token.id_token
+    _id_token_.verify!(
       issuer: issuer,
       client_id: identifier,
       nonce: nonce
     )
-    open_id = self.open_ids.find_or_initialize_by_identifier id_token.user_id
+    open_id = self.open_ids.find_or_initialize_by_identifier _id_token_.user_id
     open_id.access_token, open_id.id_token = access_token.access_token, access_token.id_token
     open_id.save!
     open_id.account || Account.create!(open_id: open_id)

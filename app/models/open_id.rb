@@ -12,6 +12,6 @@ class OpenId < ActiveRecord::Base
   end
 
   def check_id!
-    provider.check_id! id_token
+    provider.decode_id id_token
   end
 end
