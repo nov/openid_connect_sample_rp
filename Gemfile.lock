@@ -110,7 +110,7 @@ GEM
       activerecord (~> 3.0)
       activesupport (~> 3.0)
       polyamorous (~> 0.5.0)
-    swd (0.2.0)
+    swd (0.2.1)
       activesupport (>= 3)
       attr_required (>= 0.0.5)
       httpclient (>= 2.2.1)
