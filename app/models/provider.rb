@@ -81,6 +81,7 @@ class Provider < ActiveRecord::Base
     client.authorization_uri(
       response_type: :code,
       nonce: nonce,
+      state: nonce,
       scope: [:openid, :profile, :address, :email, :address, :phone],
       # request: OpenIDConnect::RequestObject.new(
       #   id_token: {
