@@ -115,7 +115,7 @@ class Provider < ActiveRecord::Base
   def authenticate(redirect_uri, code, nonce)
     client.redirect_uri = redirect_uri
     client.authorization_code = code
-    access_token = client.access_token! :body
+    access_token = client.access_token!
     _id_token_ = decode_id access_token.id_token
     _id_token_.verify!(
       issuer: issuer,
