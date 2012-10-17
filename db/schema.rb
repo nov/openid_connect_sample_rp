@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(:version => 20110909022417) do
     t.string   "token_endpoint"
     t.string   "user_info_endpoint"
     t.string   "x509_url"
+    t.string   "jwk_url"
     t.boolean  "dynamic",                :default => false
     t.datetime "expires_at"
     t.datetime "created_at",                                :null => false

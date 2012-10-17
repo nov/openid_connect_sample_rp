@@ -26,8 +26,11 @@ class Provider < ActiveRecord::Base
     identifier.present? && !expired?
   end
 
+  def config
+    @config ||= OpenIDConnect::Discovery::Provider::Config.discover! issuer
+  end
+
   def associate!(redirect_uri)
-    config = OpenIDConnect::Discovery::Provider::Config.discover! issuer
     client = OpenIDConnect::Client::Registrar.new(
       config.registration_endpoint,
       application_name: 'NOV RP',
@@ -43,6 +46,7 @@ class Provider < ActiveRecord::Base
       token_endpoint:         config.token_endpoint,
       user_info_endpoint:     config.user_info_endpoint,
       x509_url:               config.x509_url,
+      jwk_url:                config.jwk_url,
       dynamic:                true,
       expires_at:             client.expires_in.try(:from_now)
     }
@@ -82,7 +86,8 @@ class Provider < ActiveRecord::Base
       response_type: :code,
       nonce: nonce,
       state: nonce,
-      scope: [:openid, :profile, :address, :email, :address, :phone],
+      scope: [:openid, :email],
+      # scope: [:openid, :profile, :address, :email, :address, :phone],
       # request: OpenIDConnect::RequestObject.new(
       #   id_token: {
       #     max_age: 10,
@@ -103,19 +108,14 @@ class Provider < ActiveRecord::Base
     )
   end
 
-  def public_key
-    @cert ||= OpenSSL::X509::Certificate.new open(x509_url).read
-    @cert.public_key
-  end
-
   def decode_id(id_token)
-    OpenIDConnect::ResponseObject::IdToken.decode id_token, public_key
+    OpenIDConnect::ResponseObject::IdToken.decode id_token, config.signing_key
   end
 
   def authenticate(redirect_uri, code, nonce)
     client.redirect_uri = redirect_uri
     client.authorization_code = code
-    access_token = client.access_token!
+    access_token = client.access_token! :body
     _id_token_ = decode_id access_token.id_token
     _id_token_.verify!(
       issuer: issuer,
