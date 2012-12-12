@@ -86,7 +86,7 @@ class Provider < ActiveRecord::Base
       response_type: :code,
       nonce: nonce,
       state: nonce,
-      scope: [:openid, :email],
+      scope: [:openid, :email, :profile, :address],
       # scope: [:openid, :profile, :address, :email, :address, :phone],
       # request: OpenIDConnect::RequestObject.new(
       #   id_token: {
