@@ -54,7 +54,7 @@ class Provider < ActiveRecord::Base
   end
 
   def self.discover!(host)
-    issuer = OpenIDConnect::Discovery::Provider.discover!(host).location
+    issuer = OpenIDConnect::Discovery::Provider.discover!(host).issuer
     if provider = find_by_issuer(issuer)
       provider
     else
