@@ -4,10 +4,10 @@ class Provider < ActiveRecord::Base
 
   validates :issuer,                 presence: true, uniqueness: {allow_nil: true}
   validates :name,                   presence: true
-  validates :identifier,             presence: {if: :associated?}
-  validates :authorization_endpoint, presence: {if: :associated?}
-  validates :token_endpoint,         presence: {if: :associated?}
-  validates :user_info_endpoint,     presence: {if: :associated?}
+  validates :identifier,             presence: {if: :registered?}
+  validates :authorization_endpoint, presence: {if: :registered?}
+  validates :token_endpoint,         presence: {if: :registered?}
+  validates :user_info_endpoint,     presence: {if: :registered?}
 
   scope :dynamic,  where(dynamic: true)
   scope :listable, where(dynamic: false)
@@ -22,7 +22,7 @@ class Provider < ActiveRecord::Base
     expires_at.try(:past?)
   end
 
-  def associated?
+  def registered?
     identifier.present? && !expired?
   end
 
@@ -30,14 +30,14 @@ class Provider < ActiveRecord::Base
     @config ||= OpenIDConnect::Discovery::Provider::Config.discover! issuer
   end
 
-  def associate!(redirect_uri)
+  def register!(redirect_uri)
     client = OpenIDConnect::Client::Registrar.new(
       config.registration_endpoint,
       application_name: 'NOV RP',
       application_type: 'web',
       redirect_uris: redirect_uri,
-      user_id_type: 'pairwise'
-    ).associate!
+      subject_type: 'pairwise'
+    ).register!
     self.attributes = {
       identifier:             client.identifier,
       secret:                 client.secret,
@@ -122,7 +122,7 @@ class Provider < ActiveRecord::Base
       client_id: identifier,
       nonce: nonce
     )
-    open_id = self.open_ids.find_or_initialize_by_identifier _id_token_.user_id
+    open_id = self.open_ids.find_or_initialize_by_identifier _id_token_.subject
     open_id.access_token, open_id.id_token = access_token.access_token, access_token.id_token
     open_id.save!
     open_id.account || Account.create!(open_id: open_id)

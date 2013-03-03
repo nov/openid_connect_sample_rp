@@ -9,8 +9,8 @@ class ProvidersController < ApplicationController
 
   def create
     provider = Provider.discover! params[:host]
-    unless provider.associated?
-      provider.associate! provider_open_id_url(provider)
+    unless provider.registered?
+      provider.register! provider_open_id_url(provider)
     end
     redirect_to provider.authorization_uri(
       provider_open_id_url(provider),
