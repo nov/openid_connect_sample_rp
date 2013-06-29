@@ -10,7 +10,7 @@ en:
     scope: Scope
     authorization_endpoint: Authorization Endpoint
     token_endpoint: Token Endpoint
-    user_info_endpoint: UserInfo Endpoint
+    userinfo_endpoint: UserInfo Endpoint
     placeholder:
       name: for display purpose
       identifier: client_id
@@ -19,7 +19,7 @@ en:
   open_id:
     access_token:
       title: Access Token
-    user_info:
+    userinfo:
       title: UserInfo
       errors: Errors
     id_token:

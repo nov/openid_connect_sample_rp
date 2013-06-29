@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(:version => 20110909022417) do
   create_table "providers", :force => true do |t|
     t.integer  "account_id"
     t.string   "issuer"
+    t.string   "jwks_uri"
     t.string   "name"
     t.string   "identifier"
     t.string   "secret"
@@ -39,9 +40,7 @@ ActiveRecord::Schema.define(:version => 20110909022417) do
     t.string   "scheme"
     t.string   "authorization_endpoint"
     t.string   "token_endpoint"
-    t.string   "user_info_endpoint"
-    t.string   "x509_url"
-    t.string   "jwk_url"
+    t.string   "userinfo_endpoint"
     t.boolean  "dynamic",                :default => false
     t.datetime "expires_at"
     t.datetime "created_at",                                :null => false

@@ -3,7 +3,7 @@ class AccountsController < ApplicationController
 
   def show
     @open_id = current_account.open_id
-    @user_info = @open_id.to_access_token.user_info!
+    @userinfo = @open_id.to_access_token.userinfo!
     @providers = current_account.providers
   end
 end

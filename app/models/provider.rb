@@ -1,4 +1,6 @@
 class Provider < ActiveRecord::Base
+  serialize :scopes_supported, JSON
+
   has_many :open_ids
   belongs_to :account
 
@@ -7,7 +9,7 @@ class Provider < ActiveRecord::Base
   validates :identifier,             presence: {if: :registered?}
   validates :authorization_endpoint, presence: {if: :registered?}
   validates :token_endpoint,         presence: {if: :registered?}
-  validates :user_info_endpoint,     presence: {if: :registered?}
+  validates :userinfo_endpoint,     presence: {if: :registered?}
 
   scope :dynamic,  where(dynamic: true)
   scope :listable, where(dynamic: false)
@@ -33,20 +35,19 @@ class Provider < ActiveRecord::Base
   def register!(redirect_uri)
     client = OpenIDConnect::Client::Registrar.new(
       config.registration_endpoint,
-      application_name: 'NOV RP',
+      client_name: 'NOV RP',
       application_type: 'web',
-      redirect_uris: redirect_uri,
+      redirect_uris: [redirect_uri],
       subject_type: 'pairwise'
     ).register!
     self.attributes = {
       identifier:             client.identifier,
       secret:                 client.secret,
-      scope:                  config.scopes_supported.join(' '),
+      scope:                  config.scopes_supported,
       authorization_endpoint: config.authorization_endpoint,
       token_endpoint:         config.token_endpoint,
-      user_info_endpoint:     config.user_info_endpoint,
-      x509_url:               config.x509_url,
-      jwk_url:                config.jwk_url,
+      userinfo_endpoint:      config.userinfo_endpoint,
+      jwks_uri:               config.jwks_uri,
       dynamic:                true,
       expires_at:             client.expires_in.try(:from_now)
     }
@@ -67,8 +68,8 @@ class Provider < ActiveRecord::Base
 
   def as_json(options = {})
     [
-      :identifier, :secret, :scope, :host, :scheme,
-      :authorization_endpoint, :token_endpoint, :user_info_endpoint, :x509_url
+      :identifier, :secret, :scope, :host, :scheme, :jwks_uri,
+      :authorization_endpoint, :token_endpoint, :userinfo_endpoint
     ].inject({}) do |hash, key|
       hash.merge!(
         key => self.send(key)
@@ -98,7 +99,7 @@ class Provider < ActiveRecord::Base
       #       }
       #     }
       #   },
-      #   user_info: {
+      #   userinfo: {
       #     claims: {
       #       name: :required,
       #       email: :optional
@@ -109,7 +110,7 @@ class Provider < ActiveRecord::Base
   end
 
   def decode_id(id_token)
-    OpenIDConnect::ResponseObject::IdToken.decode id_token, config.signing_key
+    OpenIDConnect::ResponseObject::IdToken.decode id_token, config.public_keys.first
   end
 
   def authenticate(redirect_uri, code, nonce)
