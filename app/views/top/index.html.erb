@@ -1,5 +1,3 @@
-<%= javascript_include_tag 'http://webintents.org/webintents.js' %>
-
 <article>
   <h2><%= 'top.title'.t %></h2>
   <p><%= 'top.description'.t %></p>
@@ -19,28 +17,6 @@
         <%= text_field_tag :host, nil, placeholder: 'connect-op.heroku.com' %>
         <%= submit_tag 'providers.create.title'.t %>
       <% end %>
-      <p class="intent"><%= submit_tag 'Or Try WebIntents?', :id => 'intent' %></p>
     </div>
   </nav>
 </article>
-
-<script>
-  $(function () {
-    $('#intent').click(function () {
-      var intent = new Intent(
-        "http://openid.net/connect/discovery/simple-web-discovery",
-        "application/json"
-      );
-      window.navigator.startActivity(intent, function (result) {
-        var op_identifier = result.locations[0];
-        var form = $('form[action="<%= providers_path %>"]');
-        $('input#host', form).val(op_identifier);
-        alert([
-          'WebIntents Response',
-          JSON.stringify(result, null, 2)
-        ].join("\n\n"));
-        form.submit();
-      });
-    });
-  });
-</script>
