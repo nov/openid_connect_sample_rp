@@ -3,7 +3,12 @@ class ApplicationController < ActionController::Base
   include Nonce
   include Notification
 
-  rescue_from Rack::OAuth2::Client::Error, OpenIDConnect::Exception, MultiJson::LoadError do |e|
+  rescue_from(
+    Rack::OAuth2::Client::Error,
+    OpenIDConnect::Exception,
+    MultiJson::LoadError,
+    OpenSSL::SSL::SSLError
+  ) do |e|
     flash[:error] = if e.message.length > 2000
       'Unknown Error'
     else
