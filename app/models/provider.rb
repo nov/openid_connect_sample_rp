@@ -9,7 +9,7 @@ class Provider < ActiveRecord::Base
   validates :identifier,             presence: {if: :registered?}
   validates :authorization_endpoint, presence: {if: :registered?}
   validates :token_endpoint,         presence: {if: :registered?}
-  validates :userinfo_endpoint,     presence: {if: :registered?}
+  validates :userinfo_endpoint,      presence: {if: :registered?}
 
   scope :dynamic,  where(dynamic: true)
   scope :listable, where(dynamic: false)
@@ -48,7 +48,6 @@ class Provider < ActiveRecord::Base
       token_endpoint:         config.token_endpoint,
       userinfo_endpoint:      config.userinfo_endpoint,
       jwks_uri:               config.jwks_uri,
-      dynamic:                true,
       expires_at:             client.expires_in.try(:from_now)
     }
     save!
@@ -59,7 +58,7 @@ class Provider < ActiveRecord::Base
     if provider = find_by_issuer(issuer)
       provider
     else
-      create(
+      dynamic.create(
         issuer: issuer,
         name: host
       )
