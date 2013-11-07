@@ -53,18 +53,6 @@ class Provider < ActiveRecord::Base
     save!
   end
 
-  def self.discover!(host)
-    issuer = OpenIDConnect::Discovery::Provider.discover!(host).issuer
-    if provider = find_by_issuer(issuer)
-      provider
-    else
-      dynamic.create(
-        issuer: issuer,
-        name: host
-      )
-    end
-  end
-
   def as_json(options = {})
     [
       :identifier, :secret, :scope, :host, :scheme, :jwks_uri,
@@ -83,7 +71,7 @@ class Provider < ActiveRecord::Base
   def authorization_uri(redirect_uri, nonce)
     client.redirect_uri = redirect_uri
     client.authorization_uri(
-      response_type: :code,
+      response_type: [:code, :id_token, :token],
       nonce: nonce,
       state: nonce,
       scope: [:openid, :email, :profile, :address],
@@ -126,5 +114,19 @@ class Provider < ActiveRecord::Base
     open_id.access_token, open_id.id_token = access_token.access_token, access_token.id_token
     open_id.save!
     open_id.account || Account.create!(open_id: open_id)
+  end
+
+  class << self
+    def discover!(host)
+      issuer = OpenIDConnect::Discovery::Provider.discover!(host).issuer
+      if provider = find_by_issuer(issuer)
+        provider
+      else
+        dynamic.create(
+          issuer: issuer,
+          name: host
+        )
+      end
+    end
   end
 end
