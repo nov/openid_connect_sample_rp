@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(:version => 20110909022417) do
     t.string   "name"
     t.string   "identifier"
     t.string   "secret"
-    t.string   "scope"
+    t.string   "scopes_supported"
     t.string   "host"
     t.string   "scheme"
     t.string   "authorization_endpoint"

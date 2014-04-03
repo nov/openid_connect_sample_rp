@@ -43,7 +43,7 @@ class Provider < ActiveRecord::Base
     self.attributes = {
       identifier:             client.identifier,
       secret:                 client.secret,
-      scope:                  config.scopes_supported,
+      scopes_supported:       config.scopes_supported,
       authorization_endpoint: config.authorization_endpoint,
       token_endpoint:         config.token_endpoint,
       userinfo_endpoint:      config.userinfo_endpoint,
@@ -55,7 +55,7 @@ class Provider < ActiveRecord::Base
 
   def as_json(options = {})
     [
-      :identifier, :secret, :scope, :host, :scheme, :jwks_uri,
+      :identifier, :secret, :scopes_supported, :host, :scheme, :jwks_uri,
       :authorization_endpoint, :token_endpoint, :userinfo_endpoint
     ].inject({}) do |hash, key|
       hash.merge!(
@@ -74,7 +74,7 @@ class Provider < ActiveRecord::Base
       response_type: :code,
       nonce: nonce,
       state: nonce,
-      scope: [:openid, :email, :profile, :address],
+      scope: scopes_supported & [:openid, :email, :profile, :address].collect(&:to_s),
       # scope: [:openid, :profile, :address, :email, :address, :phone],
       # request: OpenIDConnect::RequestObject.new(
       #   id_token: {
