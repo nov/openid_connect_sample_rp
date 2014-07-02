@@ -68,6 +68,15 @@ class Provider < ActiveRecord::Base
     @client ||= OpenIDConnect::Client.new as_json
   end
 
+  def client_auth_method
+    supported = config.token_endpoint_auth_methods_supported
+    if supported.present? && !supported.include?('client_secret_basic')
+      :post
+    else
+      :basic
+    end
+  end
+
   def authorization_uri(redirect_uri, nonce)
     client.redirect_uri = redirect_uri
     client.authorization_uri(
@@ -103,7 +112,7 @@ class Provider < ActiveRecord::Base
   def authenticate(redirect_uri, code, nonce)
     client.redirect_uri = redirect_uri
     client.authorization_code = code
-    access_token = client.access_token!
+    access_token = client.access_token! client_auth_method
     _id_token_ = decode_id access_token.id_token
     _id_token_.verify!(
       issuer: issuer,
