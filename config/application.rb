@@ -38,5 +38,8 @@ module ConnectRp
 
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
+
+    # ref) http://simonecarletti.com/blog/2012/02/heroku-and-rails-3-2-assetprecompile-error/
+    config.assets.initialize_on_precompile = false
   end
 end
