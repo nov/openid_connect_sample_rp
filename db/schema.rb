@@ -22,8 +22,8 @@ ActiveRecord::Schema.define(:version => 20110909022417) do
     t.integer  "account_id"
     t.integer  "provider_id"
     t.string   "identifier"
-    t.string   "access_token"
-    t.string   "id_token",     :limit => 1024
+    t.string   "access_token", :limit => 1024
+    t.string   "id_token",     :limit => 2048
     t.datetime "created_at",                   :null => false
     t.datetime "updated_at",                   :null => false
   end
