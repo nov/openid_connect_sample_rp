@@ -1,5 +1,6 @@
 module Nonce
-  class SessionBindingRequired < StandardError; end
+  class Exception < StandardError; end
+  class SessionBindingRequired < Exception; end
 
   def new_nonce
     session[:nonce] = SecureRandom.hex(16)

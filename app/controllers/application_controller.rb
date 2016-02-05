@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   rescue_from(
     Rack::OAuth2::Client::Error,
     OpenIDConnect::Exception,
+    Nonce::Exception,
     MultiJson::LoadError,
     OpenSSL::SSL::SSLError
   ) do |e|
