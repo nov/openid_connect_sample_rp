@@ -1,20 +1,11 @@
 Provider.create! [{
   name:                   'Microsoft',
-  issuer:                 'https://sts.windows.net/b4ea3de6-839e-4ad1-ae78-c78e5c0cdc06/',
-  identifier:             '7db0f079-8e21-4914-9a9b-0896c80f4816',
-  secret:                 'Mp8EAXSOlVOeQaAlAADwtboofkUd8gycok8TvTGmKHM=',
+  issuer:                 'https://login.microsoftonline.com/d2f17455-673e-4168-aede-c31b83cf0a3b/v2.0',
+  identifier:             'c6ca85c3-7aaa-4162-9bbc-ce4e69b492b7',
+  secret:                 'VhrjtecSvQFT6CmybFLLsdf',
   scopes_supported:       [:openid, :profile, :email],
-  authorization_endpoint: 'https://login.windows.net/b4ea3de6-839e-4ad1-ae78-c78e5c0cdc06/oauth2/authorize',
-  token_endpoint:         'https://login.windows.net/b4ea3de6-839e-4ad1-ae78-c78e5c0cdc06/oauth2/token',
-  userinfo_endpoint:      'https://login.windows.net/b4ea3de6-839e-4ad1-ae78-c78e5c0cdc06/openid/userinfo',
-  jwks_uri:               'https://login.windows.net/common/discovery/keys'
-}, {
-  name:                   'mixi',
-  issuer:                 'https://mixi.jp',
-  identifier:             'd7573a9ad2a9d6a41ebc',
-  secret:                 '199c0c8e204227343d36d50100b601c9c1651184',
-  scopes_supported:       [:openid, :profile],
-  authorization_endpoint: 'https://mixi.jp/connect_authorize.pl',
-  token_endpoint:         'https://secure.mixi-platform.com/2/token',
-  userinfo_endpoint:      'https://api.mixi-platform.com/2/openid/userinfo'
+  authorization_endpoint: 'https://login.windows.net/d2f17455-673e-4168-aede-c31b83cf0a3b/oauth2/v2.0/authorize',
+  token_endpoint:         'https://login.windows.net/d2f17455-673e-4168-aede-c31b83cf0a3b/oauth2/v2.0/token',
+  userinfo_endpoint:      'https://graph.microsoft.com/me',
+  jwks_uri:               'https://login.windows.net/d2f17455-673e-4168-aede-c31b83cf0a3b/discovery/v2.0/keys'
 }]
