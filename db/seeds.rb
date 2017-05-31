@@ -13,11 +13,11 @@ Provider.create! [{
 }]
 
 Provider.create!({
-  issuer: "http://localhost:8080/auth/realms/MyRealm",
-  authorization_endpoint: "http://localhost:8080/auth/realms/MyRealm/protocol/openid-connect/auth",
-  token_endpoint: "http://localhost:8080/auth/realms/MyRealm/protocol/openid-connect/token",
-  userinfo_endpoint: "http://localhost:8080/auth/realms/MyRealm/protocol/openid-connect/userinfo",
-  jwks_uri: "http://localhost:8080/auth/realms/MyRealm/protocol/openid-connect/certs",
+  issuer: "#{ENV['PROVIDER_BASE_URL']}/auth/realms/MyRealm",
+  authorization_endpoint: "#{ENV['PROVIDER_BASE_URL']}/auth/realms/MyRealm/protocol/openid-connect/auth",
+  token_endpoint: "#{ENV['PROVIDER_BASE_URL']}/auth/realms/MyRealm/protocol/openid-connect/token",
+  userinfo_endpoint: "#{ENV['PROVIDER_BASE_URL']}/auth/realms/MyRealm/protocol/openid-connect/userinfo",
+  jwks_uri: "#{ENV['PROVIDER_BASE_URL']}/auth/realms/MyRealm/protocol/openid-connect/certs",
   name: "keycloak",
   identifier: ENV['CLIENT_ID'],
   scopes_supported: ["Manager"],
