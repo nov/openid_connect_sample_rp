@@ -1,3 +1,5 @@
+Provider.destroy_all
+
 Provider.create! [{
   name:                   'Microsoft',
   issuer:                 'https://login.microsoftonline.com/d2f17455-673e-4168-aede-c31b83cf0a3b/v2.0',
@@ -9,3 +11,14 @@ Provider.create! [{
   userinfo_endpoint:      'https://graph.microsoft.com/me',
   jwks_uri:               'https://login.microsoftonline.com/d2f17455-673e-4168-aede-c31b83cf0a3b/discovery/v2.0/keys'
 }]
+
+Provider.create!({
+  issuer: "http://localhost:8080/auth/realms/MyRealm",
+  authorization_endpoint: "http://localhost:8080/auth/realms/MyRealm/protocol/openid-connect/auth",
+  token_endpoint: "http://localhost:8080/auth/realms/MyRealm/protocol/openid-connect/token",
+  userinfo_endpoint: "http://localhost:8080/auth/realms/MyRealm/protocol/openid-connect/userinfo",
+  jwks_uri: "http://localhost:8080/auth/realms/MyRealm/protocol/openid-connect/certs",
+  name: "keycloak",
+  identifier: ENV['CLIENT_ID'],
+  scopes_supported: ["Manager"],
+  secret: ENV['SECRET']})
