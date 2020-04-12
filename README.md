@@ -46,7 +46,7 @@ To run this in development mode:
 
 Point your browser at http://localhost:3001
 
-If you download and run [the sample OP server](https://connect-rp.herokuapp.com)
+If you download and run [the sample OP server](https://github.com/nov/openid_connect)
 you can have this RP use that OP for authentication
 (use the OP's address in the "Discover" field, e.g. `localhost:3000`).
 The two servers on localhost must run on different ports.
